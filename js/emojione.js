@@ -1,0 +1,1 @@
+../node_modules/emojione/lib/js/emojione.min.js

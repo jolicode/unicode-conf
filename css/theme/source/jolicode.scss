@@ -1,0 +1,155 @@
+/**
+ * Custom theme for JoliCode.com
+ *
+ *      _____       __    _    ______                __
+ *     |_   _|     [  |  (_) .' ___  |              |  ]
+ *       | |  .--.  | |  __ / .'   \_|  .--.    .--.| | .---.
+ *   _   | |/ .'`\ \| | [  || |       / .'`\ \/ /'`\' |/ /__\\
+ *  | |__' || \__. || |  | |\ `.___.'\| \__. || \__/  || \__.,
+ *  `.____.' '.__.'[___][___]`.____ .' '.__.'  '.__.;__]'.__.'
+ *
+ *
+ * @author dalexandre@jolicode.com
+ */
+// Default mixins and settings -----------------
+@import "../template/mixins";
+@import "../template/settings";
+
+// ---------------------------------------------
+
+$joli-yellow: #F7D325;
+$joli-dark-yellow: #ECC217;
+$complementary: #25b2f7;
+
+// Include theme-specific fonts
+@font-face {
+  font-family: 'convergenceregular';
+  src: url('../../lib/font/convergence-regular-webfont.eot');
+  src: url('../../lib/font/convergence-regular-webfont.eot?#iefix') format('embedded-opentype'),
+  url('../../lib/font/convergence-regular-webfont.woff') format('woff'),
+  url('../../lib/font/convergence-regular-webfont.ttf') format('truetype'),
+  url('../../lib/font/convergence-regular-webfont.svg#convergenceregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+// Headings
+$headingFont: 'convergenceregular', Impact, sans-serif;
+$headingColor: $joli-yellow;
+$headingLineHeight: 1.1em;
+
+// Links and actions
+$linkColor: $complementary;
+$linkColorHover: $joli-yellow;
+
+// Text selection
+$selectionBackgroundColor: $joli-dark-yellow;
+
+footer.joli {
+  display: block;
+  position: absolute;
+  bottom: 10px;
+  margin-left: 20px;
+  z-index: 20;
+  font-family: $mainFont;
+  color: $complementary;
+}
+
+.jolistate .reveal .state-background {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.big-shadow {
+  text-shadow: -5px 5px 25px #000,
+  5px  -5px 25px #000, 5px 5px 25px #000,
+  -5px -5px 25px #000;
+}
+
+.reveal section a img, .reveal section img {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.reveal section a:hover img {
+  background: none !important;
+  box-shadow: none !important;
+}
+
+.reveal section .footnote {
+  margin-top: 100px;
+  font-size: 0.6em;
+  color: #bcbcbc;
+  text-align: right;
+}
+
+.reveal section .emphasis {
+  color: $complementary;
+}
+
+.reveal section {
+  .no-caps {
+    text-transform: none;
+  }
+  .no-border {
+    border: none;
+    box-shadow: none;
+    background: transparent;
+  }
+  p {
+    line-height: 1.5em;
+  }
+  li {
+    padding: 10px 0;
+  }
+
+  p > code, li > code {
+    background-color: #3e3e3e;
+    border: 1px solid #7f7f7f;
+    color: #efefef;
+    font-style: serif;
+    padding: 3px 10px;
+  }
+
+  pre {
+    width: 100%;
+
+    code {
+      font-size: 1.4em;
+      line-height: 1em;
+    }
+  }
+
+  blockquote {
+    border-left: 10px solid $complementary;
+    padding-left: 20px;
+    margin: 50px auto;
+    quotes: "\201C""\201D""\2018""\2019";
+    text-align: left;
+    font-style: normal;
+  }
+  blockquote:before {
+    color: $complementary;
+    content: open-quote;
+    font-size: 4em;
+    line-height: 0.1em;
+    margin-right: 0.25em;
+    vertical-align: -0.4em;
+  }
+
+  &.present[data-background] {
+    h1, h2, h3, h4, h5, h6, p {
+      @extend .big-shadow;
+    }
+  }
+}
+
+// Background generator
+@mixin bodyBackground() {
+  background-color: #171717!important;
+}
+
+// Theme template ------------------------------
+@import "../template/theme";
+// ---------------------------------------------
+

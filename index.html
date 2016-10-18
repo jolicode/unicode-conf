@@ -1,0 +1,930 @@
+<!doctype html>
+<html lang="fr">
+<head>
+	<meta charset="utf-8">
+
+	<!--
+	pizza = &#x1F355;
+
+	-->
+
+	<title>Pourquoi strlen("&#x1F355;") != 1 ?</title>
+
+	<meta name="description" content="Pourquoi strlen('&#x1F355;') != 1 ?">
+	<meta name="author" content="JoliCode">
+
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/jolicode.css" id="theme">
+
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="lib/css/zenburn.css">
+
+
+	<link rel="stylesheet" href="css/emojione.css">
+
+	<!-- Printing and PDF exports -->
+	<script>
+		var link = document.createElement( 'link' );
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+		document.getElementsByTagName( 'head' )[0].appendChild( link );
+	</script>
+
+	<!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+<div class="reveal">
+
+	<!-- Any section element inside of this container is displayed as a slide -->
+	<div class="slides">
+		<section>
+			<h1>Pourquoi<br><small>strlen("&#x1F355;") != 1 ?</small></h1>
+
+			<h3>Et la petit histoire d'Unicode</h3>
+		</section>
+
+		<section data-state="jolistate">
+			<h2>@damienalexandre</h2>
+
+			<p>
+				<a href="https://twitter.com/damienalexandre">
+					<img src="images/supergeek.png" alt="Me"
+						 style="width: 30%; vertical-align: middle; background-color: white!important; padding:10px;border-radius: 15px">
+				</a>
+			</p>
+
+			<p>PHP, Elasticsearch, Symfony, Emoji</p>
+		</section>
+
+		<section data-state="jolistate">
+			<p>
+				<a href="http://jolicode.com">
+					<img src="./lib/font/logo-fond-noir.svg" alt="JoliCode" />
+				</a>
+			</p>
+
+			<h2>Conseil, r&eacute;alisation, audit, expertise et formation</h2>
+
+			<p class="footnote">
+				&hellip;Poney, Guinness et gif anim&eacute;.
+			</p>
+		</section>
+
+		<section data-background="images/5354440512_9863c66777_b.jpg">
+			<h2>Qu'est ce que le texte&nbsp;?</h2>
+		</section>
+
+		<section>
+			<h2>Rappel des bases</h2>
+
+            <ul>
+                <li>Un ordinateur parle en 1 et en 0</li>
+                <li>Nous voulons parler en texte</li>
+                <li>Il faut traduire les lettres en bits</li>
+                <li>Et inversement</li>
+            </ul>
+		</section>
+
+		<section>
+			<h2>Il a fallu se mettre d'accord</h2>
+
+            <p style="font-size: 3em;">⌨ 📠  💻 🖨 </p>
+		</section>
+
+		<section>
+			<h2>L'encodage</h2>
+
+            <p>
+                Une liste de règles pour transformer dans les deux sens une donnée.
+            </p>
+
+            <p>
+                Dire que « 01100001 » ça vaut « a ».
+            </p>
+		</section>
+
+		<section>
+			<h2>Au début c'est le chaos 👴</h2>
+
+            <ul>
+                <li>Chaque constructeur encode à sa façon</li>
+                <li>Un document quitte rarement le système dans lequel il a été écrit</li>
+                <li>L'intéropérabilité ? 😰</li>
+            </ul>
+		</section>
+
+		<section>
+			<h2>ASCII arriva</h2>
+
+            <h3 class="no-caps">🇺🇸 American Standard Code for Information Interchange</h3>
+
+            <p>
+                Publié en 1963,<br/>
+                7 bits par caractère, donc 127 possibilités.
+            </p>
+		</section>
+
+        <section data-background="#FFFFFF">
+            <img src="images/ASCII_Code_Chart-Quick_ref_card.jpg" alt="ASCII">
+        </section>
+
+        <section>
+            <h2>Pas top pour le reste du monde</h2>
+
+            <ul>
+                <li>Allemand : Schildkr<span class="emphasis">ö</span>te 🐢</li>
+                <li>Suédois : Sk<span class="emphasis">å</span>l! 🍻</li>
+                <li>Français : <span class="emphasis">É</span>l<span class="emphasis">é</span>phant 🐘</li>
+            </ul>
+
+            <p><small>Avec seulement 95 lettres imprimable on ne va pas bien loin&hellip;</small></p>
+        </section>
+
+        <section>
+            <h2>Il reste 1 bit !</h2>
+
+            <ul>
+                <li>En 1972, les premiers CPU 8 bits arrivent</li>
+                <li>Passer à 8 bits permet de mettre 255 caractères</li>
+                <li>Les européens se sont dit, la voilà notre chance !</li>
+                <li class="fragment">Chaque pays a fait sa variante d'ASCII</li>
+            </ul>
+
+            <h3 class="no-caps">é, ß, ü, ä, ö, å</h3>
+        </section>
+
+        <section>
+            <h2>Arrivé ISO-8859 &amp; co</h2>
+
+            <ul>
+                <li>ISO 8859-2 Western and Central Europe</li>
+                <li>ISO 8859-3 Turkish, Maltese plus Esperanto</li>
+                <li>ISO 8859-4 Lithuania, Estonia, Latvia and Lapp</li>
+                <li>ISO 8859-5 Cyrillic alphabet</li>
+                <li>ISO 8859-6 Arabic</li>
+                <li>ISO 8859-7 Greek</li>
+                <li>ISO 8859-8 Hebrew</li>
+                <li>ISO 8859-9 Western Europe with amended Turkish</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Arrivé ISO-8859 &amp; co</h2>
+
+            <ul>
+                <li>ISO 8859-15 Added the Euro sign from ISO 8859-1</li>
+                <li>ISO 8859-11 Thai</li>
+                <li>ISO 8859-14 Celtic languages</li>
+                <li>Windows-1253 for Greek</li>
+                <li>Windows-1254 for Turkish</li>
+                <li>Windows-1255 for Hebrew</li>
+                <li>Windows-1258 for Vietnamese</li>
+                <li>&hellip;</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3 class="no-caps">Pour écrire un article en
+                🇷🇺 Russe sur
+                le 🇸🇪  Suédois</h3>
+            <p>"Skål!" означает здоровье на шведском языке.</p>
+            <h4 class="no-caps">On crée un nouvel encodage ?</h4>
+
+            <img src="images/need-help.gif" alt="Help" />
+        </section>
+
+        <section>
+            <h2>Et Internet arriva</h2>
+
+            <ul>
+                <li>On s'échange des contenus dans plusieurs langues</li>
+                <li>Deviner l'encodage d'un document... ça marche pas trop</li>
+                <li>Hacker ASCII a ses limites</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Deviner l'encodage</h2>
+
+            <ul>
+                <li>Saisir "Bush hid the facts" dans notepad</li>
+                <li>Sauver, fermer, ouvrir</li>
+                <li>S'affiche alors "畂桳栠摩琠敨映捡獴" !</li>
+            </ul>
+
+            <p>Windows provoquait l'interprétation en UTF-16LE d'un texte encodé en ASCII.</p>
+        </section>
+
+        <section>
+            <h2>L'age d'or du Mojibake</h2>
+
+            <h3>L'ISO-8859-1 c'est <span class="emphasis">gÃ©nial</span> !</h3>
+        </section>
+
+        <section>
+            <h2 class="no-caps">Soumettre une conférence avec un Emoji dans le titre...</h2>
+
+            <p class="footnote">Désolé les organisateurs ;-)</p>
+        </section>
+
+        <section>
+            <img src="images/FAIL-joind.png" alt="">
+        </section>
+        <section>
+            <img src="images/FAIL-lanyrd.png" alt="">
+        </section>
+        <section>
+            <img src="images/FAIL-email.png" alt="">
+        </section>
+        <section>
+            <img src="images/FAIL-blendsite.png" alt="">
+        </section>
+        <section>
+            <img src="images/FAIL-blend.png" alt="">
+        </section>
+        <section>
+            <img src="images/y-u-so-difficult.jpg" alt="">
+        </section>
+
+        <section>
+            <h2 class="no-caps">Introducing UNICODE</h2>
+
+            <p>Publié en 1991, avant la Playstation, le HTML et les Pokémons.</p>
+
+            <ul class="fragment">
+                <li>universal (addressing the needs of world languages)</li>
+                <li>uniform (fixed-width codes for efficient access)</li>
+                <li>unique (bit sequence has only one interpretation into character codes)</li>
+            </ul>
+        </section>
+
+        <section data-background="images/lord-of-the-rings-ring-wallpaper.jpg">
+            <img src="images/un-encodage-gouverner.png" alt="">
+        </section>
+
+        <section>
+            <h2>Unicode 1.0</h2>
+
+            <ul>
+                <li>65536 code points disponible, pas mal !</li>
+                <li>Stocké sur 16 bits</li>
+                <li>Adopté par JavaScript, C, Java...</li>
+                <li>Enfin une façon universel de représenter du texte !</li>
+                <li>1 caractère = 2 octets (UCS)</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Unicode 1.0</h2>
+
+            <ul>
+                <li>1991 : 7,161 caratères (Arabic, Greek, Tamil, Thai…)</li>
+                <li>1992 : 28,359 caratères (début de l'ajout des CJK)</li>
+                <li>1993 : 34,233 caratères (ajout du Korean)</li>
+            </ul>
+        </section>
+
+
+        <section>
+            <h3 class="no-caps">En fait 16 bits c'est pas suffisant</h3>
+
+            <img src="images/Well-Escalated.jpg" alt="">
+        </section>
+
+        <section>
+            <h2>UTF et Unicode 2.0</h2>
+
+            <ul>
+                <li>Unicode ne parle plus en caractère mais en code point</li>
+                <li>1,114,112 code point possible (déjà 178,500 assignés)</li>
+                <li>Unicode = la liste des caractères</li>
+                <li>UTF = l'encodage</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="no-caps">UTF : Universal Character Set</h2>
+
+            <ul>
+                <li>Spécifie comment stocker un code point Unicode
+                <li>Chaque code point a une représentation exacte
+                <li>Disponible sur 8, 16 ou 32 bits par code point
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="no-caps">UTF-8</h2>
+
+            <ul>
+                <li>Le plus répandu sur le Web, utilisé par Unix
+                <li>Utilise… 8 bits ou plus pour chaque code point
+                <li>100% compatible avec ASCII : le premier octet mappe directement les codes ASCII
+                <li>Plus d'1 octet pour tout ce qui n'est pas ASCII
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="no-caps">UTF-16</h2>
+
+            <ul>
+                <li>Très utilisé aussi : Windows, NTFS, JavaScript (migration facile depuis UCS / Unicode 1.0)
+                <li>Utilise toujours des groupes de 16 bits pour stocker un code point
+                <li>Si le code point est en dehors de la BMP, utilise des surrogate pairs
+                <li>Gâche de la mémoire pour l'ASCII
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="no-caps">La BMP ?</h2>
+
+            <ul>
+                <li>Basic Multilingual Plane
+                <li>Unicode est séparé en 17 espaces de 65,536 codes
+                <li>Le plane 00 c'est la BPM, les caractères les plus courant
+                <li>Les autres planes sont appellés supplementary ou astral
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="no-caps">UTF-32</h2>
+
+            <ul>
+                <li>32 bits par code point
+                <li>On peut tout rentrer mais on gâche plein de place
+                <li>Personne n'utilise ce truc... Son seul avantage c'est la taille fixe
+            </ul>
+        </section>
+
+        <section>
+            <h2>Les différents UTF</h2>
+
+            <img src="images/utf-comparison.png" alt="">
+        </section>
+
+        <section>
+            <h2>Le BOM</h2>
+
+            <p>Pour dire à un logiciel "ce fichier est en UTF-X",<br/>
+                U+FEFF est ajouté en début de fichier.</p>
+
+            <p>En ISO 8859-1 il s'affiche <span class="emphasis">ï»¿</span>, ça vous rappel rien ?</p>
+        </section>
+
+        <section>
+            <h2>L'adoption est rapide</h2>
+
+            <a href="https://www.w3.org/blog/2008/05/utf8-web-growth/"><img src="images/utf8-growth-google.gif" alt=""></a>
+        </section>
+        <section>
+            <h2>L'adoption est rapide</h2>
+
+            <img src="images/encoding-today.png" alt="">
+        </section>
+
+        <section>
+            <h2>Unicode aujourd'hui</h2>
+
+            <ul>
+                <li>Tellement grand qu'il y a des espaces à usage privé<br />
+                <small>Ça permet d'avoir le <a href="http://www.evertype.com/standards/csur/klingon.html">Klingon 🖖</a></small></li>
+
+                <li>Unicode 9 (Juin 2016) contient 267,819 code point</li>
+                <li>Unicode 6 (2010) a incorporé les 🎉 Emoji 🍺 !</li>
+                <li>Décris les code point de 135 écritures, presque tout le langage écrit actuel</li>
+                <li>Recommandé par le W3C depuis HTML 4.0</li>
+            </ul>
+        </section>
+
+        <section>
+            <h4>Go Unicode or stay home</h4>
+            <img src="images/unicode.PNG" alt="">
+        </section>
+
+        <section>
+            <h2 class="no-caps">Comment on compte la longueur d'un texte ?</h2>
+
+            <ul>
+                <li>On sait que du texte c'est une suite d'octets
+                <li class="fragment">En fonction de l'encodage ces octets ont un sens
+                <li class="fragment">Certains caractères peuvent être composés
+                <li class="fragment">On compte en code point ? En octet ? En grapheme ?
+                <li class="fragment">La lettre "Œ" par exemple c'est 1 ? 2 ?
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="no-caps">Œ, l'e dans l'o</h2>
+
+            <ul>
+                <li>Unicode Character 'LATIN CAPITAL LIGATURE OE' (U+0152)</li>
+                <li>En UTF-8 il faut deux octets : 0xC5 et 0x92</li>
+                <li>Pour information il est présent dans ISO-8859-15 mais pas dans ISO-8859-1 !</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="no-caps">La taille de Œ</h2>
+
+            <pre><code class="hljs" data-trim>// PHP :
+echo strlen("Œ"); // 2, nombre d'octets bête et méchant
+echo mb_strlen("Œ"); // 1
+
+// JavaScript :
+'Œ'.lenght; // 1
+
+// Python :
+>>> len('Œ') // 2
+>>> len(u'Œ') // 1</code></pre>
+        </section>
+
+        <section>
+            <h2 class="no-caps">La taille de &#x1F355;</h2>
+
+            <pre><code class="hljs" data-trim>// PHP :
+echo strlen("&#x1F355;"); // 4, nombre d'octets bête et méchant
+echo mb_strlen("&#x1F355;"); // 1
+
+// JavaScript :
+'&#x1F355;'.lenght; // 2
+
+// Python :
+>>> len('&#x1F355;') // 4
+>>> len(u'&#x1F355;') // 1</code></pre>
+        </section>
+
+        <section>
+            <h3 class="no-caps">Taille en octet, sauf JavaScript</h3>
+
+            <ul>
+                <li>En JavaScript si vous sortez de la BMP, UTF-16 nécessite deux paires d'octets
+                <li>"\uD83C\uDF55" = 🍕 = length de 2 car deux paires UTF-16
+                <li>C'est votre navigateur qui sait combiner ces deux surrogates pairs en un caractère Unicode, pas le moteur JavaScript
+            </ul>
+        </section>
+
+        <section>
+            <h3 class="no-caps">strlen() et PHP</h3>
+
+            <p>PHP ne supporte pas Unicode… Mais finit par être tout à fait compatible !
+            Tout est traité au niveau de l'octet :</p>
+
+            <pre><code class="hljs" data-trim>echo strlen("Œ"); // 2
+echo strlen("🍕"); // 4</code></pre>
+        </section>
+
+        <section>
+            <h3 class="no-caps">Le texte en PHP</h3>
+
+            <p>Tout est octet :<br>
+                echo "🍕"[0]; // �</p>
+
+            <p>
+                Accéder à un caractère d'un octet fonctionne donc très bien (ASCII) mais au delà ce n'est plus possible.
+            </p>
+            <p>
+                Pour corriger ça, on utilise les fonctions Multibyte : mb_*
+            </p>
+        </section>
+
+        <section>
+            <h3 class="no-caps">utf8_encode</h3>
+
+            <p>Ça fait quoi exactement du coup ?</p>
+            <p class="fragment">« Encodes an ISO-8859-1 string to UTF-8 »<br /><br >
+
+                WTF NAMING 😮<br />
+                <br />
+                Préférez iconv ou mb_convert_encoding.
+            </p>
+        </section>
+
+        <section>
+            <h2 class="no-caps">Fonctions Multibyte</h2>
+
+            <pre><code class="hljs" data-trim>mb_substr("&#x1F355;", 0, 1, 'UTF-8') == "&#x1F355;"</code></pre>
+
+            <ul>
+                <li>mb_check_encoding
+                <li>mb_convert_encoding
+                <li>mb_convert_case
+                <li>mb_strlen
+                <li>mb_strtolower
+                <li>mb_parse_str...
+            </ul>
+        </section>
+
+
+
+        <section>
+            <h2 class="no-caps">Faire une application Unicode Ready</h2>
+
+            <h4>📏 Quelques régles a respecter
+                📐</h4>
+        </section>
+
+
+        <section>
+            <h2 class="no-caps">Pour vos fichiers</h2>
+
+            <p>Sauvez vos fichiers en ASCII compatible (UTF-8 mais pas UTF-16),
+                sans quoi le parseur ne <br>trouverait pas <code>&lt;?php</code>, <code>"</code>, <code>$</code>...</p>
+        </section>
+
+        <section>
+            <h2 class="no-caps">zend.multibyte</h2>
+
+            <ul>
+                <li>Depuis PHP 5.3 :
+                    <ul>
+                        <li>Dit au parseur comment votre fichier doit être lu</li>
+                        <li><code>declare(encoding='UTF-16LE');</code></li>
+                        <li>Nécessite <code>zend.multibyte=1</code></li>
+                        <li>Nécessite <code>--enable-zend-multibyte</code> à la compilation</li>
+                        <li>Seulement utilisé dans de rares cas (au Japon)</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="no-caps">default_charset</h2>
+
+            <ul>
+                <li>Depuis PHP 5.6 :
+                    <ul>
+                        <li>UTF-8 est défini par défaut 😀</li>
+                        <li>Ça envoi le header <code>Content-Type</code></li>
+                        <li>C'est l'encoding par défaut pour les fonction htmlentities(), htmlspecialchars(), iconv…</li>
+                        <li><code>ini_set('default_charset', 'BIG5');</code></li>
+                        <li>A utiliser sur tous les projets !</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="no-caps">
+                🖥
+                ↔
+                🐘
+                ↔
+                💾
+            </h2>
+
+            <ul>
+                <li>Navigateur vers PHP vers Base de donnée</li>
+                <li>Échange de donnée = encodage</li>
+                <li>Le texte n'informe pas sur son encodage</li>
+                <li>Il faut donc ajouter l'information !</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="no-caps">PHP et le navigateur</h2>
+
+            <ul>
+                <li>Dans le HTML : <code>&lt;meta charset="utf-8" /&gt;</code></li>
+                <li class="fragment">WTF 😧
+                    il faut lire le texte pour savoir comment le lire !</li>
+                <li class="fragment"><code>Content-Type:&nbsp;text/html;&nbsp;charset=utf-8</code><br />
+                    Beaucoup plus efficace
+                    😎
+                </li>
+                <li class="fragment">Aussi utilisé pour les envois de formulaire</li>
+            </ul>
+        </section>
+
+
+        <section>
+            <h2 class="no-caps">PHP et la base de donnée</h2>
+
+            <p>
+                Notre base de donnée a son propre encodage :
+            </p>
+
+            <pre><code class="hljs" data-trim>CREATE TABLE `ponies` (`description` TEXT)
+ENGINE=MyISAM DEFAULT CHARSET=utf8;</code></pre>
+
+            <p>
+                La communication a elle aussi un encodage...
+            </p>
+
+           <!-- <p>
+                La collation décrit comment comparer et trier des textes (est-ce que "Salé" === "Sale"). Fini souvent par `_ci`; Case Insensitive.
+            </p>-->
+        </section>
+
+        <section>
+            <h2 class="no-caps">PHP et la base de donnée</h2>
+
+            <pre><code class="hljs" data-trim>$pdo = new PDO(
+    'mysql:dbname=ponies;host=localhost',
+    'root', '');</code></pre>
+
+            <p>En quoi le texte est-il transféré ? Ça dépend de plein de chose mais c'est très souvent "latin1" par défaut !</p>
+
+            <pre><code class="hljs" data-trim>$pdo = new PDO(
+    'mysql:dbname=ponies;host=localhost;charset=utf8',
+    'root', '');
+
+// ou juste après connexion :
+'SET NAMES utf8;'</code></pre>
+
+            <p class="footnote">Un mot de passe pour le user root? 😂
+            </p>
+        </section>
+
+        <section>
+            <h3 class="no-caps">Chez moi ça marche, j'enlève <br><code>SET NAMES utf8;</code></h3>
+
+            <img src="images/enginer.gif" alt="">
+        </section>
+
+
+        <section>
+            <h3 class="no-caps">Ça marche sans SET NAME
+                😧
+            </h3>
+
+            <ol>
+                <li>INSERT "Loïck" en UTF-8 : <span class="emphasis">6 octets, 5 chars</span>
+                <li>Transmission en latin1…
+                <li>Loïck est transmis en LoÃ¯ck : <span class="emphasis">6 octets, 6 chars</span>
+                <li>LoÃ¯ck est stocké en UTF-8 : <span class="emphasis">8 octets, 6 chars</span>
+                <li>Puis on SELECT
+                <li>LoÃ¯ck UTF-8 transmis en latin1 : <span class="emphasis">6 octets, 6 chars</span>
+                <li>LoÃ¯ck affiché en UTF-8, ça donne Loïck !
+            </ol>
+
+
+        </section>
+
+        <section data-background="images/DSC04511.jpg">
+            <p><br><br><br><br><br><br><br></p>
+            <h2>Évitez les conversions</h2>
+            <p>Je vous présente Loïck
+                👋
+            </p>
+        </section>
+
+        <section>
+            <img src="images/tweet-inclusion.png" alt="">
+        </section>
+
+        <section>
+            <h2>Votre responsabilité d'artisans du Web</h2>
+            <p>Sur les 260 000 possibilités qu'offre Unicode,<br> pourquoi limiter ?</p>
+            <p class="fragment">
+                🔒
+                Le sentiment de la sécurité ?
+                🛡
+            </p>
+        </section>
+
+
+        <section>
+            <h2>Parlons de sécurité !</h2>
+            <h3>
+                😈
+            </h3>
+        </section>
+
+        <section>
+            <h2>Normalisation</h2>
+
+            <ul>
+                <li>Vous voulez supporter Unicode à fond :<br >
+                    &nbsp;&nbsp;&nbsp;&nbsp;username = "&#x1F355;" valide !
+                <li>Vos utilisateurs saisissent n'importe quoi
+                <li>Vous voudriez vous protéger contre certains usages…
+                    <ul>
+                        <li>é = é mais é !== é</li>
+                        <li>Caractères invisibles</li>
+                        <li>Homoglyphs…</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="no-caps">Le cas Spotify (2011)</h2>
+
+            <ul>
+
+                <li>Username "&#x1F355;" authorisés
+                <li>Il faut s'assurer qu'on a qu'un seul compte "&#x1F355;"
+
+                <li>Ne pas accepter la création du compte <code>&#x212A;evin</code> si <code>kevin</code> existe déjà
+                <li><code>&#x212A;evin != kevin</code>
+                <li>On met en miniscule ?
+
+                <li class="fragment">Unicode code point 'KELVIN SIGN' (U+212A) => "&#x212A;"
+                <li class="fragment">Ceci est un homoglyph
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="no-caps">Le cas Spotify (2011)</h2>
+
+            <ul>
+                <li>Normalisation :
+                    <ul>
+                        <li>&#x212A;evin : <span class="emphasis">u"\u212A</span>\u0065\u0076\u0069\u006E"
+                        <li>Kevin : <span class="emphasis">u"\u004B</span>\u0065\u0076\u0069\u006E"
+                        <li>kevin : <span class="emphasis">u"\u006B</span>\u0065\u0076\u0069\u006E"
+                    </ul>
+                </li>
+                <li>Doit être idempotent, et à jour !</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="no-caps">Le cas Spotify (2011)</h2>
+
+            <ul>
+                <li>Possible de créer deux comptes "Kevin"
+                <li>Reset du mot de passe de l'autre compte !
+                <li>La cause ? Leur librairie pour normaliser ne supportait que Unicode 3.2</li>
+            </ul>
+
+            <p class="footnote">https://labs.spotify.com/2013/06/18/creative-usernames/</p>
+        </section>
+
+        <section>
+            <h2>La normalisation</h2>
+
+            <p>Unicode définit comment normaliser du texte pour le tri, la comparaison, la recherche…</p>
+
+            <h2 class="no-caps">
+                ẹ́
+            </h2>
+            <ul style="font-size: 1.5em;">
+                <li>e + ◌́ + ◌̣
+                <li>e + ◌̣ + ◌́
+                <li>ẹ + ◌́
+            </ul>
+        </section>
+
+       <section>
+           <h2>The Right Way©</h2>
+
+           <pre><code class="hljs php" data-trim>
+$ARing = "\xC3\x85"; // Å (U+00C5)
+$ARingComposed = "A"."\xCC\x8A";  // A◌̊ (U+030A)
+
+$norm1 = Normalizer::normalize(
+    $ARing, Normalizer::FORM_C
+);
+$norm2 = Normalizer::normalize(
+    $ARingComposed, Normalizer::FORM_C
+);
+
+var_dump($ARing === $ARingComposed); // FALSE
+var_dump($norm1 === $norm2); // TRUE</code></pre>
+
+
+           <p>L'important c'est d'être consistant et idempotent.</p>
+           <p class="fragment">Pas comme GitHub...</p>
+       </section>
+
+
+		<section>
+			<h2>GitHub password reset (2016)</h2>
+
+            <ul>
+                <li>Demande de mot de passe oublié
+                <li>L'email est normalisé au moment du lookup en BDD
+                <li>Un token pour l'email A est généré et envoyé à l'email B !
+                <li>mike@example.org != mｉᏦᎬ@example.org
+                <li>Attaque par homoglyph
+                😈
+            </ul>
+
+            <p class="footnote">https://bounty.github.com/researchers/jagracey.html</p>
+		</section>
+
+        <section>
+            <h2>Attaques sur le stockage</h2>
+        </section>
+
+		<section>
+			<h2>Phabricator (2014)</h2>
+
+            <ul>
+                <li>Inscription limité par domaine (*@allowed-domain.com)
+                <li><code>attacker@gmail.com&#x1F355;@allowed-domain.com</code>
+                <li>Le check du domaine dit ok ✅
+                <li>Seul <code>attacker@gmail.com</code> est stocké dans MySQL !
+                <li>WIN ! 🏆
+             </ul>
+
+            <p class="footnote">https://hackerone.com/reports/2233</p>
+		</section>
+
+		<section>
+			<h2>Wordpress (2014)</h2>
+
+            <ul>
+                <li>HTML autorisé dans les commentaires
+                <li><code>&lt;abbr title='Web&#x1F355;log'&gt;blog!&lt;/abbr&gt;</code>
+                <li>Seul <code>&lt;abbr title='Web</code> est stocké dans MySQL !
+                <li>HTML cassé, réparé avec un second commentaire :
+                <li><code>coucou' onmouseover='alert(1)'</code>
+                <li>WIN ! 🏆
+             </ul>
+
+            <p class="footnote">https://cedricvb.be/post/wordpress-stored-xss-vulnerability-4-1-2/</p>
+		</section>
+
+        <section>
+            <h2 class="no-caps">Charset "utf8" dans MySQL</h2>
+
+            <ul>
+                <li><code>utf8</code> dans MySQL ne supporte pas tout Unicode
+                <li>Seulement 3 octets
+                <li>Seulement la BMP 😢
+                <li>Un charactère inconnu provoque la fin de la chaine
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="no-caps">"utf8mb4" pour tous !</h2>
+
+            <ul>
+                <li><code>utf8</code> truncate vos contenus
+                <li><code>strict mode</code> est désactivé par défaut
+            </ul>
+
+            <h1 class="no-caps">Utilisez utf8mb4 !</h1>
+        </section>
+
+
+		<section>
+			<h2>Sources / Crédits</h2>
+
+            <p>https://flic.kr/p/9a9UBS</p>
+		</section>
+	</div>
+</div>
+
+<footer class="joli">
+    « Pourquoi strlen("&#x1F355;") != 1 ? » &dash; Forum PHP 2016 &dash; <img src="lib/font/logo-fond-noir.svg" style="height:1em; vertical-align: text-bottom;" /> 2016
+</footer>
+
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+<script src="js/emojione.js"></script>
+
+<script>
+
+	// More info https://github.com/hakimel/reveal.js#configuration
+	Reveal.initialize({
+		controls: true,
+		progress: true,
+		history: true,
+		center: true,
+
+		transition: 'none', // none/fade/slide/convex/concave/zoom
+
+		// More info https://github.com/hakimel/reveal.js#dependencies
+		dependencies: [
+			{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+			{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+			{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+			{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+			{ src: 'plugin/zoom-js/zoom.js', async: true },
+			{ src: 'plugin/notes/notes.js', async: true }
+		]
+	});
+
+	// Emoji One
+	emojione.imageType = 'svg';
+	emojione.sprites = true;
+	emojione.imagePathSVGSprites = 'lib/emojione.sprites.svg';
+    delete emojione.jsEscapeMap["©"]; // Do not translate my Mojibake :D
+
+	Reveal.addEventListener('ready', function(event) {
+		var emoji_nodes = document.querySelectorAll('section p, section li, section h1, section h2, section h3, section h4, section h5, section h6, footer');
+
+		for( var i = 0, len = emoji_nodes.length; i < len; i++ ) {
+			var element = emoji_nodes[i];
+
+			var input = element.innerHTML;
+			element.innerHTML = emojione.unicodeToImage(input);
+		}
+	});
+</script>
+
+</body>
+</html>
