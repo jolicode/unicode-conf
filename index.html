@@ -51,7 +51,7 @@
 		<section>
 			<h1>Pourquoi<br><small>strlen("&#x1F355;") != 1 ?</small></h1>
 
-			<h3>Et la petit histoire d'Unicode</h3>
+			<h3>Et la petite histoire d'Unicode</h3>
 		</section>
 
 		<section data-state="jolistate">
@@ -148,7 +148,7 @@
                 <li>Français : <span class="emphasis">É</span>l<span class="emphasis">é</span>phant 🐘</li>
             </ul>
 
-            <p><small>Avec seulement 95 lettres imprimable on ne va pas bien loin&hellip;</small></p>
+            <p><small>Avec seulement 95 lettres imprimables on ne va pas bien loin&hellip;</small></p>
         </section>
 
         <section>
@@ -157,7 +157,7 @@
             <ul>
                 <li>En 1972, les premiers CPU 8 bits arrivent</li>
                 <li>Passer à 8 bits permet de mettre 255 caractères</li>
-                <li>Les européens se sont dit, la voilà notre chance !</li>
+                <li>Les européens se sont dit : « la voilà notre chance ! »</li>
                 <li class="fragment">Chaque pays a fait sa variante d'ASCII</li>
             </ul>
 
@@ -278,10 +278,10 @@
             <h2>Unicode 1.0</h2>
 
             <ul>
-                <li>65536 code points disponible, pas mal !</li>
+                <li>65536 code points disponibles, pas mal !</li>
                 <li>Stocké sur 16 bits</li>
                 <li>Adopté par JavaScript, C, Java...</li>
-                <li>Enfin une façon universel de représenter du texte !</li>
+                <li>Enfin une façon universelle de représenter du texte !</li>
                 <li>1 caractère = 2 octets (UCS)</li>
             </ul>
         </section>
@@ -308,7 +308,7 @@
 
             <ul>
                 <li>Publié en Juillet 1996</li>
-                <li>Unicode ne parle plus en caractère mais en code point</li>
+                <li>Unicode ne parle plus en caractères mais en code point</li>
                 <li>1,114,112 code point possible</li>
                 <li>Unicode = la liste des caractères</li>
                 <li>UTF = l'encodage</li>
@@ -406,7 +406,7 @@
 
                 <li>Unicode 9 (Juin 2016) contient 267,819 code point</li>
                 <li>Unicode 6 (2010) a incorporé les 🎉 Emoji 🍺 !</li>
-                <li>Décris les code point de 135 écritures, presque tout le langage écrit actuel</li>
+                <li>Décrit les code point de 135 écritures, presque tout le langage écrit actuel</li>
                 <li>Recommandé par le W3C depuis HTML 4.0</li>
             </ul>
         </section>
@@ -469,7 +469,7 @@ echo mb_strlen("&#x1F355;"); // 1
         </section>
 
         <section>
-            <h3 class="no-caps">Taille en octet, sauf JavaScript</h3>
+            <h3 class="no-caps">Taille en octets, sauf JavaScript</h3>
 
             <ul>
                 <li>En JavaScript si vous sortez de la BMP, UTF-16 nécessite deux paires d'octets
@@ -495,7 +495,7 @@ echo strlen("🍕"); // 4</code></pre>
                 echo "🍕"[0]; // �</p>
 
             <p>
-                Accéder à un caractère d'un octet fonctionne donc très bien (ASCII) mais au delà ce n'est plus possible.
+                Accéder à un caractère qui fait un octet fonctionne donc très bien, mais au delà ce n'est plus possible.
             </p>
             <p>
                 Pour corriger ça, on utilise les fonctions Multibyte : mb_*
@@ -617,7 +617,7 @@ echo strlen("🍕"); // 4</code></pre>
             <h2 class="no-caps">PHP et la base de données</h2>
 
             <p>
-                Notre base de donnée a son propre encodage :
+                Notre base de données a son propre encodage :
             </p>
 
             <pre><code class="hljs" data-trim>CREATE TABLE `ponies` (`description` TEXT)
@@ -828,7 +828,7 @@ var_dump($norm1 === $norm2); // TRUE</code></pre>
 			<h2>Phabricator (2014)</h2>
 
             <ul>
-                <li>Inscription limité par domaine (*@allowed-domain.com)
+                <li>Inscription limitée par domaine (*@allowed-domain.com)
                 <li><code>attacker@gmail.com&#x1F355;@allowed-domain.com</code>
                 <li>Le check du domaine dit ok ✅
                 <li>Seul <code>attacker@gmail.com</code> est stocké dans MySQL !
