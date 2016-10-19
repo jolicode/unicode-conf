@@ -723,7 +723,7 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8;</code></pre>
         </section>
 
         <section>
-            <h2 class="no-caps">Le cas Spotify (2011)</h2>
+            <h2 class="no-caps">Normalisation</h2>
 
             <ul>
 
@@ -740,10 +740,10 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8;</code></pre>
         </section>
 
         <section>
-            <h2 class="no-caps">Le cas Spotify (2011)</h2>
+            <h2 class="no-caps">Normalisation</h2>
 
             <ul>
-                <li>Normalisation :
+                <li>KELVIN SIGN, K UPPERCASE, K LOWERCASE :
                     <ul>
                         <li>&#x212A;evin : <span class="emphasis">u"\u212A</span>\u0065\u0076\u0069\u006E"
                         <li>Kevin : <span class="emphasis">u"\u004B</span>\u0065\u0076\u0069\u006E"
@@ -761,6 +761,7 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8;</code></pre>
                 <li>Possible de créer deux comptes "Kevin"
                 <li>Reset du mot de passe de l'autre compte !
                 <li>La cause ? Leur librairie pour normaliser ne supportait que Unicode 3.2</li>
+                <li>Si caractère inconnu, lever une exception !</li>
             </ul>
 
             <p class="footnote">https://labs.spotify.com/2013/06/18/creative-usernames/</p>
