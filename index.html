@@ -358,6 +358,18 @@
             </ul>
         </section>
 
+
+        <section>
+            <h2 class="no-caps">Des surrogate pairs ?</h2>
+
+            <ul>
+                <li>U+1D306 tetragram for centre 𝌆
+                <li>Il faut deux paires de UTF-16, mais sans conflit
+                <li>Les deux paires sont <code>0xD834</code> et <code>0xDF06</code>
+                <li>Elles ne représentent rien unitairement
+            </ul>
+        </section>
+
         <section>
             <h2 class="no-caps">UTF-32</h2>
 
@@ -481,7 +493,7 @@ echo mb_strlen("&#x1F355;"); // 1
         <section>
             <h3 class="no-caps">strlen() et PHP</h3>
 
-            <p>PHP ne supporte pas Unicode… Mais fini par être tout à fait compatible !
+            <p>PHP ne supporte pas Unicode… Mais finit par être tout à fait compatible !
             Tout est traité au niveau de l'octet :</p>
 
             <pre><code class="hljs" data-trim>echo strlen("Œ"); // 2
@@ -495,7 +507,7 @@ echo strlen("🍕"); // 4</code></pre>
                 echo "🍕"[0]; // �</p>
 
             <p>
-                Accéder à un caractère qui fait un octet fonctionne donc très bien, mais au delà ce n'est plus possible.
+                Accéder à un caractère qui fait un octet fonctionne donc très bien, mais au-delà ce n'est plus possible.
             </p>
             <p>
                 Pour corriger ça, on utilise les fonctions Multibyte : mb_*
@@ -572,7 +584,7 @@ echo strlen("🍕"); // 4</code></pre>
                         <li>Ça envoie le header <code>Content-Type</code></li>
                         <li>C'est l'encoding par défaut pour les fonctions htmlentities(), htmlspecialchars(), iconv…</li>
                         <li><code>ini_set('default_charset', 'BIG5');</code></li>
-                        <li>A utiliser sur tous les projets !</li>
+                        <li>À utiliser sur tous les projets !</li>
                     </ul>
                 </li>
             </ul>
@@ -608,7 +620,7 @@ echo strlen("🍕"); // 4</code></pre>
                     Beaucoup plus efficace
                     😎
                 </li>
-                <li class="fragment">Aussi utilisé pour les envois de formulaire</li>
+                <li class="fragment">Aussi utilisé pour les envois de formulaires</li>
             </ul>
         </section>
 
@@ -673,8 +685,6 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8;</code></pre>
                 <li>LoÃ¯ck UTF-8 transmis en latin1 : <span class="emphasis">6 octets, 6 chars</span>
                 <li>LoÃ¯ck affiché en UTF-8, ça donne Loïck !
             </ol>
-
-
         </section>
 
         <section data-background="images/DSC04511.jpg">
@@ -716,7 +726,7 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8;</code></pre>
                     <ul>
                         <li>é = é mais é !== é</li>
                         <li>Caractères invisibles</li>
-                        <li>Homoglyphs…</li>
+                        <li>Homoglyphes…</li>
                     </ul>
                 </li>
             </ul>
@@ -732,10 +742,10 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8;</code></pre>
 
                 <li>Ne pas accepter la création du compte <code>&#x212A;evin</code> si <code>kevin</code> existe déjà
                 <li><code>&#x212A;evin != kevin</code>
-                <li>On met en miniscule ?
+                <li>On met en miniscules ?
 
                 <li class="fragment">Unicode code point 'KELVIN SIGN' (U+212A) => "&#x212A;"
-                <li class="fragment">Ceci est un homoglyph
+                <li class="fragment">Ceci est un homoglyphe
             </ul>
         </section>
 
