@@ -569,8 +569,8 @@ echo strlen("🍕"); // 4</code></pre>
                 <li>Depuis PHP 5.6 :
                     <ul>
                         <li>UTF-8 est défini par défaut 😀</li>
-                        <li>Ça envoi le header <code>Content-Type</code></li>
-                        <li>C'est l'encoding par défaut pour les fonction htmlentities(), htmlspecialchars(), iconv…</li>
+                        <li>Ça envoie le header <code>Content-Type</code></li>
+                        <li>C'est l'encoding par défaut pour les fonctions htmlentities(), htmlspecialchars(), iconv…</li>
                         <li><code>ini_set('default_charset', 'BIG5');</code></li>
                         <li>A utiliser sur tous les projets !</li>
                     </ul>
@@ -590,8 +590,8 @@ echo strlen("🍕"); // 4</code></pre>
             </h2>
 
             <ul>
-                <li>Navigateur vers PHP vers Base de donnée</li>
-                <li>Échange de donnée = encodage</li>
+                <li>Navigateur vers PHP vers Base de données</li>
+                <li>Échange de données = encodage</li>
                 <li>Le texte n'informe pas sur son encodage</li>
                 <li>Il faut donc ajouter l'information !</li>
             </ul>
@@ -614,7 +614,7 @@ echo strlen("🍕"); // 4</code></pre>
 
 
         <section>
-            <h2 class="no-caps">PHP et la base de donnée</h2>
+            <h2 class="no-caps">PHP et la base de données</h2>
 
             <p>
                 Notre base de donnée a son propre encodage :
@@ -633,13 +633,13 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8;</code></pre>
         </section>
 
         <section>
-            <h2 class="no-caps">PHP et la base de donnée</h2>
+            <h2 class="no-caps">PHP et la base de données</h2>
 
             <pre><code class="hljs" data-trim>$pdo = new PDO(
     'mysql:dbname=ponies;host=localhost',
     'root', '');</code></pre>
 
-            <p>En quoi le texte est-il transféré ? Ça dépend de plein de chose mais c'est très souvent "latin1" par défaut !</p>
+            <p>En quoi le texte est-il transféré ? Ça dépend de plein de choses mais c'est très souvent "latin1" par défaut !</p>
 
             <pre><code class="hljs" data-trim>$pdo = new PDO(
     'mysql:dbname=ponies;host=localhost;charset=utf8',
@@ -861,7 +861,7 @@ var_dump($norm1 === $norm2); // TRUE</code></pre>
                 <li><code>utf8</code> dans MySQL ne supporte pas tout Unicode
                 <li>Seulement 3 octets
                 <li>Seulement la BMP 😢
-                <li>Un charactère inconnu provoque la fin de la chaine
+                <li>Un caractère inconnu provoque la fin de la chaine
             </ul>
         </section>
 
