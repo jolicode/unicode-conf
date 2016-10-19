@@ -31,6 +31,16 @@ module.exports = function(grunt) {
 			}
 		},
 
+		copy: {
+			main: {
+				files: [
+					{ src: ['node_modules/emojione/lib/js/emojione.min.js'], dest: 'js/emojione.js', filter: 'isFile'},
+					{ src: ['node_modules/emojione/assets/sprites/emojione.sprites.svg'], dest: 'lib/emojione.sprites.svg', filter: 'isFile'},
+					{ src: ['node_modules/emojione/assets/css/emojione.css'], dest: 'css/emojione.css', filter: 'isFile'},
+				],
+			},
+		},
+
 		sass: {
 			core: {
 				files: {
@@ -144,13 +154,14 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks( 'grunt-contrib-cssmin' );
 	grunt.loadNpmTasks( 'grunt-contrib-uglify' );
 	grunt.loadNpmTasks( 'grunt-contrib-watch' );
+	grunt.loadNpmTasks( 'grunt-contrib-copy' );
 	grunt.loadNpmTasks( 'grunt-sass' );
 	grunt.loadNpmTasks( 'grunt-contrib-connect' );
 	grunt.loadNpmTasks( 'grunt-autoprefixer' );
 	grunt.loadNpmTasks( 'grunt-zip' );
 
 	// Default task
-	grunt.registerTask( 'default', [ 'css', 'js' ] );
+	grunt.registerTask( 'default', [ 'copy', 'css', 'js' ] );
 
 	// JS task
 	grunt.registerTask( 'js', [ 'jshint', 'uglify', 'qunit' ] );
@@ -168,9 +179,9 @@ module.exports = function(grunt) {
 	grunt.registerTask( 'package', [ 'default', 'zip' ] );
 
 	// Serve presentation locally
-	grunt.registerTask( 'serve', [ 'connect', 'watch' ] );
+	grunt.registerTask( 'serve', [ 'copy', 'connect', 'watch' ] );
 
 	// Run tests
-	grunt.registerTask( 'test', [ 'jshint', 'qunit' ] );
+	grunt.registerTask( 'test', [ 'copy', 'jshint', 'qunit' ] );
 
 };
