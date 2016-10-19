@@ -768,7 +768,7 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8;</code></pre>
             <h2 class="no-caps">
                 ẹ́
             </h2>
-            <ul style="font-size: 1.5em;">
+            <ul style="font-size: 1.5em; font-family: Monaco, Menlo, Consolas, 'Courier New', monospace">
                 <li>e + ◌́ + ◌̣
                 <li>e + ◌̣ + ◌́
                 <li>ẹ + ◌́
@@ -862,19 +862,111 @@ var_dump($norm1 === $norm2); // TRUE</code></pre>
 
             <ul>
                 <li><code>utf8</code> truncate vos contenus
-                <li><code>strict mode</code> est désactivé par défaut
+                <li><code>strict mode</code> est désactivé par défaut 😞
             </ul>
 
             <h1 class="no-caps">Utilisez utf8mb4 !</h1>
         </section>
 
 
-		<section>
-			<h2>Sources / Crédits</h2>
+        <section>
+            <h2 class="no-caps">Quelques Pro-tips ©</h2>
 
-            <p>https://flic.kr/p/9a9UBS</p>
-		</section>
-	</div>
+            <ul>
+                <li>Utilisez http://editorconfig.org/
+                    <pre><code>[*]
+charset = utf-8</code></pre>
+                <li>Toujours forcer le charset de vos connexions MySQL
+                <li>Ne plus utiliser <code>utf8</code> mais <code>utf8mb4</code>
+                <li>Normalisez avec les bons outils, et de façon homogène
+                <li>GO UNICODE !
+            </ul>
+        </section>
+
+        <section>
+            <h2>A vos questions !</h2>
+
+            <p>Merci pour votre attention
+                😘
+            </p>
+
+            <div style="margin-top:100px">
+                <small>Supportez le Consortium Unicode, adoptez un caractère !</small>
+            </div>
+            <a href="http://unicode.org/consortium/adopt-a-character.html"><img style="margin-top: 0" src="images/bronze-1F37B.png" alt="JoliCode.com Emoji"></a>
+        </section>
+
+        <section>
+            <h1>PHP 6 👋
+            </h1>
+        </section>
+
+        <section>
+            <h2 class="no-caps">PHP 6 et Unicode</h2>
+
+            <ul>
+                <li>Le Web est Unicode</li>
+                <li>PHP est le Web</li>
+                <li>PHP doit avoir Unicode !</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="no-caps">PHP 6 et Unicode</h2>
+
+            <ul>
+                <li>Démarré en 2005</li>
+                <li>Ajout du support complet dans toute l'API</li>
+                <li>N'a jamais abouti faute de traction</li>
+                <li class="fragment">Mais on peut rêver !</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="no-caps">PHP 6 et Unicode</h2>
+
+            <pre><code class="hljs php" data-trim>$string = "🍕🐘";
+echo $string[0];
+=> 🍕
+
+$string[1] = "🐍";
+echo $string;
+=> 🍕🐍
+
+echo strlen("🐘");
+=> 1
+            </code></pre>
+        </section>
+
+        <section>
+            <h2 class="no-caps">PHP 6 et Unicode</h2>
+
+            <pre><code class="hljs php" data-trim>class 🍣 implements 🍚, 🐟 {
+    $🍶 = true;
+    $⛔ = [
+        "🐱"
+    ];
+}</code></pre>
+
+            <p class="footnote">En vrai ça fonctionne déjà pour les classes</p>
+        </section>
+
+
+
+        <section data-markdown>
+            <script type="text/template">
+## Sources / Crédits
+
+- https://flic.kr/p/9a9UBS
+- [Table ASCII](https://commons.wikimedia.org/w/index.php?curid=3954800) par Namazu-tron — Domaine public
+- https://en.wikipedia.org/wiki/ASCII 🤓
+- Le [travail de Mathias Bynens](https://mathiasbynens.be/)
+- L'excellent [article de David Zentgraf](http://kunststube.net/encoding/)
+- Emoji par [EmojiOne](http://emojione.com/)
+            </script>
+        </section>
+
+    </div>
 </div>
 
 <footer class="joli">
