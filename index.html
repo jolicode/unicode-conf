@@ -17,6 +17,7 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="shortcut icon" href="favicon.ico">
 
 	<link rel="stylesheet" href="css/reveal.css">
 	<link rel="stylesheet" href="css/theme/jolicode.css" id="theme">
@@ -229,6 +230,7 @@
             <h2>L'age d'or du Mojibake</h2>
 
             <h3>L'ISO-8859-1 c'est <span class="emphasis">gÃ©nial</span> !</h3>
+            <p class="fragment">Vous voulez voir du Mojibake ?</p>
         </section>
 
         <section>
@@ -240,9 +242,9 @@
         <section>
             <img src="images/FAIL-joind.png" alt="">
         </section>
-        <section>
+        <!--<section>
             <img src="images/FAIL-lanyrd.png" alt="">
-        </section>
+        </section>-->
         <section>
             <img src="images/FAIL-email.png" alt="">
         </section>
@@ -305,8 +307,9 @@
             <h2>UTF et Unicode 2.0</h2>
 
             <ul>
+                <li>Publié en Juillet 1996</li>
                 <li>Unicode ne parle plus en caractère mais en code point</li>
-                <li>1,114,112 code point possible (déjà 178,500 assignés)</li>
+                <li>1,114,112 code point possible</li>
                 <li>Unicode = la liste des caractères</li>
                 <li>UTF = l'encodage</li>
             </ul>
@@ -350,7 +353,7 @@
             <ul>
                 <li>Basic Multilingual Plane
                 <li>Unicode est séparé en 17 espaces de 65,536 codes
-                <li>Le plane 00 c'est la BPM, les caractères les plus courant
+                <li>Le plane 00 c'est la BMP, les caractères les plus courant
                 <li>Les autres planes sont appellés supplementary ou astral
             </ul>
         </section>
@@ -374,8 +377,11 @@
         <section>
             <h2>Le BOM</h2>
 
-            <p>Pour dire à un logiciel "ce fichier est en UTF-X",<br/>
-                U+FEFF est ajouté en début de fichier.</p>
+            <ul>
+                <li>Dit à un logiciel "Ce fichier est en Unicode"</li>
+                <li>Pas obligatoire mais souvent utile</li>
+                <li>Peut aussi donner l'ordre des octets pour UTF-16 et UTF-32...</li>
+            </ul>
 
             <p>En ISO 8859-1 il s'affiche <span class="emphasis">ï»¿</span>, ça vous rappelle rien ?</p>
         </section>
@@ -573,6 +579,8 @@ echo strlen("🍕"); // 4</code></pre>
         </section>
 
         <section>
+            <h2>L'échange de données</h2>
+
             <h2 class="no-caps">
                 🖥
                 ↔
@@ -672,9 +680,7 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8;</code></pre>
         <section data-background="images/DSC04511.jpg">
             <p><br><br><br><br><br><br><br></p>
             <h2>Évitez les conversions</h2>
-            <p>Je vous présente Loïck
-                👋
-            </p>
+            <p>Je vous présente Loïck, et il veut s'inscrire sur votre site</p>
         </section>
 
         <section>
