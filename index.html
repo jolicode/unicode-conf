@@ -193,7 +193,7 @@
                 <li>&hellip;</li>
             </ul>
         </section>
-
+<!--
         <section>
             <h3 class="no-caps">Écrire du 🇸🇪 Suédois dans un document en 🇷🇺 Russe</h3>
             <p>"Skål!" означает здоровье на шведском языке.</p>
@@ -201,12 +201,20 @@
 
             <img src="images/need-help.gif" alt="Help" />
         </section>
-
+-->
         <section>
             <h2>Et Internet arriva</h2>
 
             <ul>
-                <li>On s'échange des contenus dans plusieurs langues</li>
+                <li>On s'échange des contenus dans plusieurs langues
+                    <ul>
+                        <li>"Skål!" означает здоровье на шведском языке.</li>
+                        <li>
+                            🇸🇪
+                            🇷🇺
+                        </li>
+                    </ul>
+                </li>
                 <li>Deviner l'encodage d'un document... ça marche pas trop</li>
                 <li>Hacker ASCII a ses limites</li>
             </ul>
@@ -313,7 +321,7 @@
                 <li>UTF = l'encodage</li>
             </ul>
         </section>
-
+<!--
         <section>
             <h2 class="no-caps">UTF : Universal Character Set</h2>
 
@@ -378,13 +386,13 @@
                 <li>Personne n'utilise ce truc... Son seul avantage c'est la taille fixe
             </ul>
         </section>
-
+-->
         <section>
             <h2>Les différents UTF</h2>
 
             <img src="images/utf-comparison.png" alt="">
         </section>
-
+<!--
         <section>
             <h2>Le BOM</h2>
 
@@ -402,7 +410,8 @@
 
             <a href="https://www.w3.org/blog/2008/05/utf8-web-growth/"><img src="images/utf8-growth-google.gif" alt=""></a>
         </section>
-        <section>
+-->
+      <section>
             <h2>L'adoption est rapide</h2>
 
             <img src="images/encoding-today.png" alt="">
@@ -514,18 +523,6 @@ echo strlen("🍕"); // 4</code></pre>
         </section>
 
         <section>
-            <h3 class="no-caps">utf8_encode</h3>
-
-            <p>Ça fait quoi exactement du coup ?</p>
-            <p class="fragment">« Encodes an ISO-8859-1 string to UTF-8 »<br /><br >
-
-                WTF NAMING 😮<br />
-                <br />
-                Préférez iconv ou mb_convert_encoding.
-            </p>
-        </section>
-
-        <section>
             <h2 class="no-caps">Fonctions Multibyte</h2>
 
             <pre><code class="hljs" data-trim>mb_substr("&#x1F355;", 0, 1, 'UTF-8') == "&#x1F355;"</code></pre>
@@ -540,7 +537,15 @@ echo strlen("🍕"); // 4</code></pre>
             </ul>
         </section>
 
+      <section>
+          <h3 class="no-caps">utf8_encode</h3>
 
+          <p>Ça fait quoi exactement du coup ?</p>
+          <p class="fragment">« Encodes an ISO-8859-1 string to UTF-8 »<br /><br >
+
+              WTF NAMING 😮
+          </p>
+      </section>
 
         <section>
             <h2 class="no-caps">Faire une application Unicode Ready</h2>
@@ -647,17 +652,16 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8;</code></pre>
         <section>
             <h2 class="no-caps">PHP et la base de données</h2>
 
-            <pre><code class="hljs" data-trim>$pdo = new PDO(
-    'mysql:dbname=ponies;host=localhost',
-    'root', '');</code></pre>
+            <pre><code class="hljs" data-trim>new PDO('mysql:dbname=foo;host=localhost', 'root', '');</code></pre>
 
             <p>En quoi le texte est-il transféré ? Ça dépend de plein de choses mais c'est très souvent "latin1" par défaut !</p>
 
-            <pre><code class="hljs" data-trim>$pdo = new PDO(
-    'mysql:dbname=ponies;host=localhost;charset=utf8',
-    'root', '');
+            <pre class="fragment"><code class="hljs" data-trim>new PDO(
+    'mysql:dbname=foo;host=localhost;charset=utf8',
+    'root', ''
+);
 
-// ou juste après connexion :
+// ou juste après la connexion :
 'SET NAMES utf8;'</code></pre>
 
             <p class="footnote">Un mot de passe pour le user root? 😂
@@ -724,7 +728,7 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8;</code></pre>
                 <li>Vos utilisateurs saisissent n'importe quoi
                 <li>Vous voudriez vous protéger contre certains usages…
                     <ul>
-                        <li>é = é mais é !== é</li>
+                        <li>é === é mais é !== e + ◌́  </li>
                         <li>Caractères invisibles</li>
                         <li>Homoglyphes…</li>
                     </ul>
@@ -736,13 +740,14 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8;</code></pre>
             <h2 class="no-caps">Normalisation</h2>
 
             <ul>
-
-                <li>Username "&#x1F355;" autorisé
-                <li>Il faut s'assurer que le compte "&#x1F355;" est unique
-
-                <li>Ne pas accepter la création du compte <code>&#x212A;evin</code> si <code>kevin</code> existe déjà
-                <li><code>&#x212A;evin != kevin</code>
-                <li>On met en miniscules ?
+                <li>
+                    Trouvez l'intrus :
+                    <ul>
+                        <li><code>&#x212A;evin</code>
+                        <li><code>Kevin</code>
+                        <li><code>kevin</code>
+                    </ul>
+                </li>
 
                 <li class="fragment">Unicode code point 'KELVIN SIGN' (U+212A) => "&#x212A;"
                 <li class="fragment">Ceci est un homoglyphe
@@ -763,7 +768,7 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8;</code></pre>
                 <li>Doit être idempotent, et à jour !</li>
             </ul>
         </section>
-
+<!--
         <section>
             <h2 class="no-caps">Le cas Spotify (2011)</h2>
 
@@ -776,7 +781,7 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8;</code></pre>
 
             <p class="footnote">https://labs.spotify.com/2013/06/18/creative-usernames/</p>
         </section>
-
+-->
         <section>
             <h2>La normalisation</h2>
 
