@@ -4021,18 +4021,18 @@
 			triggered = true;
 
 			switch( event.keyCode ) {
-				// p, page up
-				case 80: case 33: navigatePrev(); break;
-				// n, page down
-				case 78: case 34: navigateNext(); break;
+				// p, page up, up
+				case 80: case 33: case 38: navigatePrev(); break;
+				// n, page down, down
+				case 78: case 34: case 40: navigateNext(); break;
 				// h, left
 				case 72: case 37: navigateLeft(); break;
 				// l, right
 				case 76: case 39: navigateRight(); break;
-				// k, up
-				case 75: case 38: navigateUp(); break;
-				// j, down
-				case 74: case 40: navigateDown(); break;
+				// k
+				case 75: navigateUp(); break;
+				// j
+				case 74: navigateDown(); break;
 				// home
 				case 36: slide( 0 ); break;
 				// end
