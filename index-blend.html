@@ -73,10 +73,6 @@
         </p>
     </section>
 
-    <section data-background="images/5354440512_9863c66777_b.jpg">
-      <h2>Qu'est ce que le texte&nbsp;?</h2>
-    </section>
-
     <section>
       <h2>Rappel des bases</h2>
 
@@ -210,12 +206,6 @@
         </section>
 
         <section>
-            <img src="images/FAIL-joind.png" alt="">
-        </section>
-        <!--<section>
-            <img src="images/FAIL-lanyrd.png" alt="">
-        </section>-->
-        <section>
             <img src="images/FAIL-email.png" alt="">
         </section>
         <section>
@@ -233,17 +223,23 @@
 
             <p>Publié en 1991,<br>
               avant la Playstation, le HTML et les Pokémons.</p>
-
-            <ul class="fragment">
-                <li>universal (addressing the needs of world languages)</li>
-                <li>uniform (fixed-width codes for efficient access)</li>
-                <li>unique (bit sequence has only one interpretation into character codes)</li>
-            </ul>
         </section>
 
         <section data-background="images/lord-of-the-rings-ring-wallpaper.jpg">
             <img src="images/un-encodage-gouverner.png" alt="">
         </section>
+
+      <section>
+          <h2>Unicode 1.0</h2>
+
+          <ul>
+              <li>65536 code points disponibles, pas mal !</li>
+              <li>Stocké sur 16 bits</li>
+              <li>1 caractère = 2 octets (UCS)</li>
+              <li>Adopté par JavaScript, C, Java...</li>
+              <li>Beaucoup trop petit !</li>
+          </ul>
+      </section>
 
         <section>
             <h2>UTF et Unicode 2.0</h2>
@@ -263,10 +259,6 @@
             <img src="images/utf-comparison.png" alt="">
         </section>
 
-        <section>
-            <h4>Go Unicode or stay home</h4>
-            <img src="images/unicode.PNG" alt="">
-        </section>
 
         <section>
             <h2 class="no-caps">Comment on compte la longueur d'un texte ?</h2>
@@ -274,7 +266,7 @@
             <ul>
                 <li>On sait que du texte c'est une suite d'octets
                 <li class="fragment">En fonction de l'encodage, ces octets ont un sens
-                <li class="fragment">Certains caractères peuvent être composés
+                <li class="fragment">Certains caractères peuvent être composés (é !== e + ◌́)
                 <li class="fragment">On compte en code point ? En octet ? En graphème ?
                 <li class="fragment">La lettre "Œ" par exemple, c'est 1 ou 2 ?
             </ul>
@@ -328,7 +320,6 @@ echo mb_strlen("&#x1F355;"); // 1
                 <li>Héritage de Unicode 1.0 (UCS)
                 <li>"\uD83C\uDF55" = 🍕
                 =  2 car deux paires UTF-16
-                <li>C'est votre navigateur qui sait combiner ces deux surrogates en un caractère Unicode, pas le moteur JavaScript
             </ul>
         </section>
 
@@ -352,11 +343,9 @@ echo mb_strlen("&#x1F355;"); // 1
 
 
         <section>
-            <h2>Normalisation</h2>
+            <h2>La normalisation</h2>
 
             <ul>
-                <li>Vous voulez supporter Unicode à fond :<br >
-                    &nbsp;&nbsp;&nbsp;&nbsp;username = "&#x1F355;" valide !
                 <li>Vos utilisateurs saisissent n'importe quoi
                 <li>Vous voudriez vous protéger contre certains usages…
                     <ul>
@@ -369,7 +358,7 @@ echo mb_strlen("&#x1F355;"); // 1
         </section>
 
         <section>
-            <h2 class="no-caps">Normalisation</h2>
+            <h2 class="no-caps">La normalisation</h2>
 
             <ul>
                 <li>
@@ -387,7 +376,7 @@ echo mb_strlen("&#x1F355;"); // 1
         </section>
 
         <section>
-            <h2 class="no-caps">Normalisation</h2>
+            <h2 class="no-caps">La normalisation</h2>
 
             <ul>
                 <li>KELVIN SIGN, K UPPERCASE, K LOWERCASE :
@@ -398,6 +387,7 @@ echo mb_strlen("&#x1F355;"); // 1
                     </ul>
                 </li>
                 <li>Doit être idempotent, et à jour !</li>
+                <li>Tout est défini dans Unicode
             </ul>
         </section>
 
@@ -452,29 +442,33 @@ charset = utf-8</code></pre>
                 <li>Toujours forcer le charset de vos connexions MySQL
                 <li>Ne plus utiliser <code>utf8</code> mais <code>utf8mb4</code>
                 <li>Normalisez avec les bons outils, et de façon homogène
-                <li>GO UNICODE !
+                <li>Investissez plus de temps sur Unicode
             </ul>
         </section>
 
         <section>
-            <h2>🤘</h2>
-
-            <p>Merci pour votre attention
-                😘
+            <h2>Merci pour votre<br/>😘 attention 👋</h2>
+            <p>
+                <a href="https://twitter.com/damienalexandre">
+                    <img src="images/supergeek.png" alt="Me"
+                         style="width: 30%; vertical-align: middle; background-color: white!important; padding:10px;border-radius: 15px">
+                </a>
             </p>
-
-            <div style="margin-top:100px">
-                <small>Supportez le Consortium Unicode, adoptez un caractère !</small>
-            </div>
-            <a href="http://unicode.org/consortium/adopt-a-character.html"><img style="margin-top: 0" src="images/bronze-1F37B.png" alt="JoliCode.com Emoji"></a>
+            <h5>@damienalexandre</h5>
         </section>
+
+      <section>
+          <div style="margin-top:100px">
+              <small>Supportez le Consortium Unicode, adoptez un caractère !</small>
+          </div>
+          <a href="http://unicode.org/consortium/adopt-a-character.html"><img style="margin-top: 0" src="images/bronze-1F37B.png" alt="JoliCode.com Emoji"></a>
+      </section>
 
 
         <section data-markdown>
             <script type="text/template">
 ## Sources / Crédits
 
-- https://flic.kr/p/9a9UBS
 - [Table ASCII](https://commons.wikimedia.org/w/index.php?curid=3954800) par Namazu-tron — Domaine public
 - https://en.wikipedia.org/wiki/ASCII 🤓
 - Le [travail de Mathias Bynens](https://mathiasbynens.be/)
